@@ -34,7 +34,11 @@ function createFakeDb() {
     studentProfiles,
     counselorProfiles,
     recruiterProfiles,
+<<<<<<< HEAD
     $queryRaw: async () => [{ "?column?": 1 }],
+=======
+    $queryRaw: async () => [{ '?column?': 1 }],
+>>>>>>> f90d2c8 (feat: implement unique constraint error handling and refactor student registration to use transactions)
     $disconnect: async () => {},
     user: {
       create: async ({ data, include }) => {
@@ -126,6 +130,20 @@ function createFakeDb() {
         throw err;
       }
     },
+    counselorProfile: {
+      create: async ({ data }) => {
+        const profile = { id: `counselor-profile-${counselorProfiles.length + 1}`, ...data };
+        counselorProfiles.push(profile);
+        return profile;
+      }
+    },
+    recruiterProfile: {
+      create: async ({ data }) => {
+        const profile = { id: `recruiter-profile-${recruiterProfiles.length + 1}`, ...data };
+        recruiterProfiles.push(profile);
+        return profile;
+      }
+    },
     session: {
       create: async ({ data }) => {
         sessions.set(data.tokenHash, data);
@@ -155,6 +173,7 @@ function createFakeDb() {
     },
     invitation: {
       create: async ({ data }) => {
+<<<<<<< HEAD
         const roleName = data.role?.connect?.name;
         const roleObj = roles.find((r) => r.name === roleName);
         const inv = {
@@ -177,6 +196,15 @@ function createFakeDb() {
           return matchToken && matchEmail && matchRole && notUsed && notExpired;
         }) || null;
       },
+=======
+        invitations.push({ id: `invitation-${invitations.length + 1}`, usedAt: null, ...data });
+      },
+      findFirst: async ({ where }) => invitations.find((invitation) =>
+        invitation.tokenHash === where.tokenHash
+        && invitation.email === where.email
+        && invitation.usedAt === null
+        && new Date(invitation.expiresAt) > new Date()),
+>>>>>>> f90d2c8 (feat: implement unique constraint error handling and refactor student registration to use transactions)
       update: async ({ where, data }) => {
         const invitation = invitations.find((candidate) => candidate.id === where.id);
         Object.assign(invitation, data);
@@ -407,11 +435,19 @@ describe('authentication API', () => {
         email: invitation.email,
         password: 'correct horse battery staple',
         token: invitation.token,
+<<<<<<< HEAD
         employeeId: 'EMP-001',
         department: 'Guidance and Counseling',
         phone: '+63123456789'
       });
     if (registration.status !== 201) console.log("counselor reg response:", registration.status, registration.body);
+=======
+        firstName: 'Maria',
+        lastName: 'Santos',
+        employeeId: 'EMP-001',
+        phone: '+63123456789'
+      });
+>>>>>>> f90d2c8 (feat: implement unique constraint error handling and refactor student registration to use transactions)
 
     expect(registration.status).toBe(201);
     expect(registration.body.user).toMatchObject({
@@ -421,6 +457,7 @@ describe('authentication API', () => {
     expect(db.counselorProfiles).toHaveLength(1);
     expect(db.invitations[0].usedAt).toBeInstanceOf(Date);
   });
+<<<<<<< HEAD
 
   it('redeems admin invitations through the dedicated admin route', async () => {
     const admin = await db.user.create({
@@ -507,6 +544,8 @@ describe('authentication API', () => {
     // Because null is not cached, DB is queried again instead of cache poisoning
     expect(queryCount).toBe(2);
   });
+=======
+>>>>>>> f90d2c8 (feat: implement unique constraint error handling and refactor student registration to use transactions)
 });
 
 it('creates password hashes that can be verified by the service', async () => {

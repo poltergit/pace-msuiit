@@ -214,6 +214,7 @@ model Resume {
 
   @@index([studentId])
   @@index([counselorId])
+  @@index([isCurrent, uploadedAt])
   @@map("resumes")
 }
 
@@ -288,6 +289,8 @@ model JobApplication {
   @@unique([jobId, studentId])
   @@index([studentId])
   @@index([resumeId])
+  @@index([status])
+  @@index([jobId, appliedAt])
   @@map("job_applications")
 }
 
@@ -360,6 +363,8 @@ model Appointment {
   @@index([mentorId])
   @@index([mentorshipId])
   @@index([appointmentDate])
+  @@index([status, appointmentDate])
+  @@index([counselorId, appointmentDate])
   @@map("appointments")
 }
 
@@ -406,6 +411,7 @@ model Message {
 
   @@index([conversationId, sentAt])
   @@index([senderId])
+  @@index([conversationId, isRead, senderId])
   @@map("messages")
 }
 
@@ -423,6 +429,7 @@ model Notification {
   user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isRead])
+  @@index([userId, createdAt])
   @@map("notifications")
 }
 

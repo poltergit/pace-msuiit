@@ -190,8 +190,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("overview")}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "overview"
-                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <BarChart3 className="w-4 h-4" />
@@ -201,8 +201,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("counselors")}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "counselors"
-                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <div className="flex items-center gap-3">
@@ -217,8 +217,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("recruiters")}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "recruiters"
-                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <div className="flex items-center gap-3">
@@ -233,8 +233,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("analytics")}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "analytics"
-                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <TrendingUp className="w-4 h-4" />
@@ -244,8 +244,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("settings")}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "settings"
-                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <Settings className="w-4 h-4" />
@@ -634,8 +634,8 @@ export default function SuperadminDashboardPage() {
                         <div className="flex items-start justify-between">
                           <h3 className="font-bold text-white text-sm">{r.company}</h3>
                           <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase ${r.status === "approved" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" :
-                              r.status === "pending" ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" :
-                                "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+                            r.status === "pending" ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" :
+                              "bg-rose-500/20 text-rose-400 border border-rose-500/30"
                             }`}>
                             {r.status}
                           </span>

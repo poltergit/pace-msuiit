@@ -5,6 +5,19 @@ const SESSION_CACHE_TTL_MS = 30_000;
 const SESSION_CACHE_MAX_SIZE = 1000;
 const sessionCache = new Map();
 
+// Active cleanup of expired cache entries to prevent memory bloat
+const cacheCleanupTimer = setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of sessionCache.entries()) {
+    if (now > entry.expiresAt) {
+      sessionCache.delete(key);
+    }
+  }
+}, 60_000);
+if (cacheCleanupTimer.unref) {
+  cacheCleanupTimer.unref();
+}
+
 function cacheGet(key) {
   const entry = sessionCache.get(key);
   if (!entry) return undefined;
@@ -31,7 +44,10 @@ function cacheDel(key) {
 
 export function hashPassword(password) {
   return argon2.hash(password, {
-    type: argon2.argon2id
+    type: argon2.argon2id,
+    memoryCost: 19456, // 19 MiB OWASP recommended minimum for low-memory containers
+    timeCost: 2,
+    parallelism: 1
   });
 }
 

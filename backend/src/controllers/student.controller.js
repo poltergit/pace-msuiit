@@ -2,6 +2,7 @@ import {
   getStudentProfile as getStudentProfileRecord,
   updateStudentProfile as updateStudentProfileRecord
 } from "../services/student.service.js";
+import { listStudentsTalent } from "../services/admin.service.js";
 import { updateStudentProfileSchema } from "../schemas/student.schemas.js";
 
 function mapUniqueConstraintError(error) {
@@ -42,5 +43,22 @@ export function createStudentController({ db }) {
     }
   }
 
-  return { getProfile, updateProfile };
+  async function listStudents(req, res, next) {
+    try {
+      const result = await listStudentsTalent({
+        db,
+        search: req.query.search || null,
+        course: req.query.course || null,
+        yearLevel: req.query.yearLevel ? parseInt(req.query.yearLevel, 10) : null,
+        careerStatus: req.query.careerStatus || null,
+        page: req.query.page ? parseInt(req.query.page, 10) : 1,
+        limit: req.query.limit ? parseInt(req.query.limit, 10) : 20
+      });
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  return { getProfile, updateProfile, listStudents };
 }

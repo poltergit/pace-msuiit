@@ -9,6 +9,13 @@ import { createStudentRouter } from './routes/student.routes.js';
 import { createCounselorRouter } from './routes/counselor.routes.js';
 import { createMentorRouter } from './routes/mentor.routes.js';
 import { createRecruiterRouter } from './routes/recruiter.routes.js';
+import { createJobRouter } from './routes/job.routes.js';
+import { createResumeRouter } from './routes/resume.routes.js';
+import { createAppointmentRouter } from './routes/appointment.routes.js';
+import { createMentorshipRouter } from './routes/mentorship.routes.js';
+import { createMessageRouter } from './routes/message.routes.js';
+import { createNotificationRouter } from './routes/notification.routes.js';
+import { createAdminRouter } from './routes/admin.routes.js';
 import { createAuthMiddleware } from './middleware/auth.middleware.js';
 //swagger ui
 const openApiSpec = JSON.parse(
@@ -68,6 +75,13 @@ export function createApp({ db, config }) {
   app.use('/api/counselors', createCounselorRouter({ db, auth }));
   app.use('/api/mentors', createMentorRouter({ db, auth }));
   app.use('/api/recruiters', createRecruiterRouter({ db, auth }));
+  app.use('/api/jobs', createJobRouter({ db, auth }));
+  app.use('/api/resumes', createResumeRouter({ db, auth }));
+  app.use('/api/appointments', createAppointmentRouter({ db, auth }));
+  app.use('/api/mentorships', createMentorshipRouter({ db, auth }));
+  app.use('/api/messages', createMessageRouter({ db, auth }));
+  app.use('/api/notifications', createNotificationRouter({ db, auth }));
+  app.use('/api/admin', createAdminRouter({ db, auth }));
 
   app.use((err, req, res, next) => {
     if (err instanceof ZodError) {

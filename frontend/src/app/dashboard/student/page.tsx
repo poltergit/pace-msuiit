@@ -35,6 +35,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import DashboardLayout, { NavItem } from "@/components/DashboardLayout";
+import StudentProfilePanel from "@/components/student/StudentProfilePanel";
 
 const navItems: NavItem[] = [
   { id: "overview", label: "Overview", icon: <LayoutDashboard size={18} /> },
@@ -198,7 +199,7 @@ export default function StudentDashboard() {
   const handleBookBoothSlot = () => {
     if (!bookedBooths.includes(currentBooth.id)) {
       setBookedBooths([...bookedBooths, currentBooth.id]);
-      alert(`Success! Speed interview time-slot [${slotSelected}] confirmed at ${currentBooth.company} (${currentBooth.location}). Present your digital QR pass at the gymnasium entrance.`);
+      alert(`Preview only: ${slotSelected} is marked in this browser session for ${currentBooth.company}. No interview reservation has been saved to PACE.`);
     }
   };
 
@@ -250,36 +251,15 @@ export default function StudentDashboard() {
     >
       <div className="space-y-6">
 
-        {/* Top Profile Strip (Clean My.IIT Style) */}
-        <div className="bg-white rounded-xl border border-[#E2E8F0] p-5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-l-4 border-l-[#7A0016]">
+        <div className="bg-white rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#7A0016] p-5 shadow-xs flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div
-              className="w-14 h-14 rounded-full bg-[#F8FAFC] text-[#94A3B8] flex items-center justify-center border-2 border-[#D1D5DB] shadow-xs"
-              aria-label="Profile picture placeholder"
-            >
-              <User size={28} strokeWidth={1.5} />
-            </div>
+            <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#D1D5DB] bg-[#F8FAFC] text-[#94A3B8]"><User size={28} strokeWidth={1.5} /></div>
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-bold text-[#0F172A]">Alexandra Reyes</h2>
-                <span className="px-2 py-0.5 rounded-full bg-[#FFF3D6] text-[#7A0016] text-[10px] font-bold border border-[#F5A623]/60">
-                  ★ DEAN'S LISTER
-                </span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
-                  QR VERIFIED
-                </span>
-              </div>
-              <p className="text-xs text-[#64748B]">BS Information Technology • 4th Year Standing • Student ID: 2021-0142</p>
-              <div className="flex items-center gap-4 text-[11px] pt-1">
-                <span className="text-[#7A0016] font-bold">Cumulative GPA: 1.45</span>
-                <span>•</span>
-                <span className="text-[#64748B]">College of Computer Studies (CCS)</span>
-                <span>•</span>
-                <span className="text-emerald-700 font-semibold font-mono">Status: Ready for Placement</span>
-              </div>
+              <h2 className="text-lg font-bold text-[#0F172A]">Your PACE workspace</h2>
+              <p className="mt-1 text-xs text-[#64748B]">Manage your career development, guidance, and opportunities.</p>
+              <p className="mt-1 text-[11px] text-[#64748B]">Open My Career Profile to view and update your account details.</p>
             </div>
           </div>
-
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab("appointments")}
@@ -305,7 +285,7 @@ export default function StudentDashboard() {
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
                 <div>
                   <p className="text-[11px] font-bold uppercase tracking-wider text-[#7A0016]">CareerConnect+ Student Workspace</p>
-                  <h1 className="text-2xl font-black text-[#0F172A] mt-1">Good morning, Alexandra.</h1>
+                  <h1 className="text-2xl font-black text-[#0F172A] mt-1">Welcome to your career workspace.</h1>
                   <p className="text-sm text-[#64748B] mt-1 max-w-2xl">
                     Manage your career guidance journey, connect with your counselor, and stay informed about opportunities.
                   </p>
@@ -509,7 +489,7 @@ export default function StudentDashboard() {
                     <div><h3 className="text-sm font-bold text-[#0F172A]">{name}</h3><p className="text-[11px] text-[#64748B]">{role}</p></div>
                   </div>
                   <div className="mt-4 p-3 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0]"><p className="text-[10px] font-bold uppercase text-emerald-700">{status}</p><p className="text-xs font-semibold text-[#334155] mt-1">{slot}</p></div>
-                  <button onClick={() => alert(`Appointment request sent to ${name}.`)} className="w-full mt-4 px-3 py-2 rounded-lg bg-[#7A0016] text-white text-xs font-bold hover:bg-[#9B0020]">Request appointment</button>
+                  <button onClick={() => alert(`Preview only: an appointment request for ${name} has not been sent to the PACE service.`)} className="w-full mt-4 px-3 py-2 rounded-lg bg-[#7A0016] text-white text-xs font-bold hover:bg-[#9B0020]">Request appointment</button>
                 </div>
               ))}
             </div>
@@ -533,16 +513,8 @@ export default function StudentDashboard() {
           </div>
         )}
 
-        {activeTab === "profile" && (
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl border border-[#E2E8F0] p-6 shadow-xs"><p className="text-[11px] font-bold uppercase tracking-wider text-[#7A0016]">Student Account</p><h2 className="text-xl font-black text-[#0F172A] mt-1">My career profile</h2><p className="text-xs text-[#64748B] mt-1">Keep your information current so your counselor can provide relevant guidance.</p></div>
-            <div className="bg-white rounded-xl border border-[#E2E8F0] p-6 shadow-xs space-y-4"><div className="flex items-center gap-4"><div className="w-16 h-16 rounded-full bg-[#F8FAFC] border-2 border-[#D1D5DB] flex items-center justify-center text-[#94A3B8]"><User size={30} /></div><div><h3 className="text-lg font-bold text-[#0F172A]">Alexandra Reyes</h3><p className="text-xs text-[#64748B]">BS Information Technology • 4th Year</p></div></div><div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs"><div className="p-3 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0]"><span className="text-[10px] uppercase font-bold text-[#64748B]">Student ID</span><p className="font-semibold text-[#334155] mt-1">2021-0142</p></div><div className="p-3 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0]"><span className="text-[10px] uppercase font-bold text-[#64748B]">Email</span><p className="font-semibold text-[#334155] mt-1">alexandra.reyes@g.msuiit.edu.ph</p></div></div><button onClick={() => alert("Profile editing will be connected to the student account service.")} className="px-4 py-2 rounded-lg border border-[#7A0016] text-[#7A0016] text-xs font-bold hover:bg-[#FFF3D6]">Edit profile</button></div>
-          </div>
-        )}
+        {activeTab === "profile" && <StudentProfilePanel />}
 
-        {/* ─────────────────────────────────────────────────────────────
-            LEGACY FEATURE VIEWS
-            ───────────────────────────────────────────────────────────── */}
         {activeTab === "legacy-overview" && (
           <div className="space-y-6">
             {/* Quick Metrics */}
@@ -786,7 +758,7 @@ export default function StudentDashboard() {
 
                 <div className="pt-2 flex gap-2">
                   <button
-                    onClick={() => alert("Digital QR Badge downloaded as PNG for embedding into your CV header.")}
+                    onClick={() => alert("Preview only: QR badge export is not implemented yet.")}
                     className="flex-1 py-2 rounded-lg bg-[#7A0016] hover:bg-[#9B0020] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs btn-press"
                   >
                     <Download size={14} />
@@ -794,8 +766,7 @@ export default function StudentDashboard() {
                   </button>
                   <button
                     onClick={() => {
-                      navigator.clipboard?.writeText?.(`https://pace.msuiit.edu.ph/verify/${verificationCode}`);
-                      alert("Career verification link copied to clipboard!");
+                      alert("Preview only: public career-verification links are not connected yet.");
                     }}
                     className="px-3 py-2 rounded-lg border border-[#CBD5E1] text-[#334155] hover:bg-slate-100 text-xs font-bold flex items-center gap-1"
                   >
@@ -871,7 +842,7 @@ export default function StudentDashboard() {
                 </p>
               </div>
               <button
-                onClick={() => alert("Simulation scheduled! Your assigned counselor Dr. Maria Santos will conduct your evaluation tomorrow at 10:00 AM.")}
+                onClick={() => alert("Preview only: mock interview scheduling is not connected to live counselor availability yet.")}
                 className="px-4 py-2 rounded-lg bg-[#7A0016] hover:bg-[#9B0020] text-white text-xs font-bold shadow-xs btn-press"
               >
                 + Request New Mock Session
@@ -971,7 +942,7 @@ export default function StudentDashboard() {
                 </div>
 
                 <button
-                  onClick={() => alert("Downloading Official Evaluation PDF...")}
+                  onClick={() => alert("Preview only: signed evaluation report export is not available yet.")}
                   className="w-full py-2.5 rounded-lg border border-[#CBD5E1] text-[#334155] hover:bg-slate-50 text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
                 >
                   <Download size={14} />

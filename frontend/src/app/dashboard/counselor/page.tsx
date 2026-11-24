@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import DashboardAuthGuard from "@/components/DashboardAuthGuard";
+import { ApiError, authApi } from "@/lib/api/client";
+import type { CounselorProfile } from "@/lib/api/types";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
@@ -200,10 +203,24 @@ const INITIAL_WALK_IN_SCHEDULE: Record<string, { start: string; end: string }> =
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
-export default function CounselorDashboard() {
+function CounselorDashboardContent() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [signOutError, setSignOutError] = useState("");
+  const [counselorProfile, setCounselorProfile] = useState<CounselorProfile | null>(null);
+  const [counselorProfileError, setCounselorProfileError] = useState("");
+  const [availabilitySaving, setAvailabilitySaving] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    authApi.counselorProfile()
+      .then(({ profile }) => { if (active) setCounselorProfile(profile); })
+      .catch((error: unknown) => {
+        if (active) setCounselorProfileError(error instanceof ApiError ? error.message : "Counselor profile could not be loaded.");
+      });
+    return () => { active = false; };
+  }, []);
 
   // Appointments
   const [appointments, setAppointments] = useState<PendingAppointment[]>(PENDING_APPOINTMENTS_INIT);
@@ -269,9 +286,31 @@ export default function CounselorDashboard() {
     setChatInput("");
   };
 
-  const handleSignOut = () => {
+  const handleToggleAvailability = async () => {
+    if (!counselorProfile || availabilitySaving) return;
+    setAvailabilitySaving(true);
+    setCounselorProfileError("");
+    try {
+      const { profile } = await authApi.updateCounselorProfile({
+        isAvailable: !counselorProfile.isAvailable,
+      });
+      setCounselorProfile(profile);
+    } catch (error) {
+      setCounselorProfileError(error instanceof ApiError ? error.message : "Unable to update availability.");
+    } finally {
+      setAvailabilitySaving(false);
+    }
+  };
+
+  const handleSignOut = async () => {
     setSidebarOpen(false);
-    router.push("/auth/login");
+    setSignOutError("");
+    try {
+      await authApi.logout();
+      router.replace("/auth/login");
+    } catch {
+      setSignOutError("Unable to confirm sign out. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -446,8 +485,13 @@ export default function CounselorDashboard() {
               MS
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-white text-xs font-medium truncate">Dr. Maria Santos</div>
-              <div className="text-white/40 text-xs truncate">Career Counselor</div>
+              <div className="text-white text-xs font-medium truncate">Career Counselor</div>
+              <div className="text-white/50 text-[10px] truncate">{counselorProfile ? `${counselorProfile.employeeId} · ${counselorProfile.department}` : counselorProfileError || "Loading counselor profile…"}</div>
+              {counselorProfile && <button type="button" onClick={handleToggleAvailability} disabled={availabilitySaving} aria-pressed={counselorProfile.isAvailable} title="Toggle counselor availability" className="mt-1 inline-flex items-center gap-1.5 text-[10px] font-semibold text-white/75 hover:text-white disabled:opacity-50">
+                <span className={`h-1.5 w-1.5 rounded-full ${counselorProfile.isAvailable ? "bg-emerald-400" : "bg-slate-400"}`} />
+                {availabilitySaving ? "Updating…" : counselorProfile.isAvailable ? "Available for advising" : "Not available"}
+              </button>}
+              {counselorProfileError && <p role="alert" className="mt-1 text-[10px] leading-4 text-red-200">{counselorProfileError}</p>}
             </div>
             <button
               type="button"
@@ -461,6 +505,8 @@ export default function CounselorDashboard() {
           </div>
         </div>
       </aside>
+
+      {signOutError && <div role="alert" className="fixed bottom-4 right-4 z-[100] rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700 shadow-lg">{signOutError}</div>}
 
       {/* ── Main ── */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
@@ -995,5 +1041,13 @@ export default function CounselorDashboard() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function CounselorDashboard() {
+  return (
+    <DashboardAuthGuard allowedRoles={["counselor"]} previewNotice="Counselor appointments, CV reviews, schedules, and messages currently use demonstration data. Only your counselor profile and availability status are connected to the backend.">
+      <CounselorDashboardContent />
+    </DashboardAuthGuard>
   );
 }

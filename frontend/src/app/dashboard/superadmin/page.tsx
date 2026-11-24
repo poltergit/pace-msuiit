@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ShieldCheck,
@@ -32,6 +33,8 @@ import {
   Layers
 } from "lucide-react";
 import PaceLogo from "@/components/PaceLogo";
+import DashboardAuthGuard from "@/components/DashboardAuthGuard";
+import { authApi } from "@/lib/api/client";
 
 interface CounselorItem {
   id: string;
@@ -57,7 +60,10 @@ interface RecruiterItem {
   activeJobs: number;
 }
 
-export default function SuperadminDashboardPage() {
+function SuperadminDashboardContent() {
+  const router = useRouter();
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState("");
   const [activeTab, setActiveTab] = useState<"overview" | "counselors" | "recruiters" | "analytics" | "settings">("overview");
 
   // Counselor State
@@ -129,6 +135,18 @@ export default function SuperadminDashboardPage() {
     }));
   };
 
+  async function handleSignOut() {
+    setSigningOut(true);
+    setSignOutError("");
+    try {
+      await authApi.logout();
+      router.replace("/auth/login");
+    } catch {
+      setSignOutError("Unable to confirm sign out. Please try again.");
+      setSigningOut(false);
+    }
+  }
+
   return (
     <div className="superadmin-page min-h-screen bg-[#EEF2F6] text-[#0F172A] flex flex-col selection:bg-[#F5A623] selection:text-white">
       {/* Top Navigation */}
@@ -151,7 +169,7 @@ export default function SuperadminDashboardPage() {
         <div className="flex items-center gap-3">
           <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-900/90 border border-stone-800 text-xs text-stone-300">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            System Node: <span className="font-mono text-amber-400">iligan-main-dc1</span>
+            Workspace mode: <span className="font-mono text-amber-400">preview</span>
           </div>
 
           <button
@@ -169,15 +187,17 @@ export default function SuperadminDashboardPage() {
               SA
             </div>
             <div className="hidden sm:block text-left">
-              <p className="text-xs font-semibold leading-tight text-stone-200">Dir. Renato Santos</p>
-              <p className="text-[10px] text-stone-400 font-mono">Chief Career Executive</p>
+              <p className="text-xs font-semibold leading-tight text-stone-200">PACE Administrator</p>
+              <p className="text-[10px] text-stone-400 font-mono">Administrator workspace</p>
             </div>
-            <Link href="/" className="ml-2 text-stone-400 hover:text-stone-200 p-1.5 rounded-lg hover:bg-stone-900">
-              <LogOut className="w-4 h-4" />
-            </Link>
+            <button type="button" onClick={handleSignOut} disabled={signingOut} aria-label="Sign out" title="Sign out" className="ml-2 rounded-lg p-1.5 text-stone-400 hover:bg-stone-900 hover:text-stone-200 disabled:opacity-50">
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </header>
+
+      {signOutError && <div role="alert" className="border-b border-red-200 bg-red-50 px-5 py-2 text-xs text-red-700">{signOutError}</div>}
 
       {/* Main Body Layout */}
       <div className="flex-1 flex overflow-hidden">
@@ -190,8 +210,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("overview")}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "overview"
-                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <BarChart3 className="w-4 h-4" />
@@ -201,8 +221,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("counselors")}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "counselors"
-                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <div className="flex items-center gap-3">
@@ -217,8 +237,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("recruiters")}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "recruiters"
-                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <div className="flex items-center gap-3">
@@ -233,8 +253,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("analytics")}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "analytics"
-                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <TrendingUp className="w-4 h-4" />
@@ -244,8 +264,8 @@ export default function SuperadminDashboardPage() {
                 <button
                   onClick={() => setActiveTab("settings")}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${activeTab === "settings"
-                    ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
-                    : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
+                      ? "bg-gradient-to-r from-[#7A0016] to-[#5C0011] text-amber-300 border border-[#F5A623]/30 shadow-md shadow-[#7A0016]/20"
+                      : "text-stone-400 hover:text-stone-200 hover:bg-stone-900/60"
                     }`}
                 >
                   <Settings className="w-4 h-4" />
@@ -254,12 +274,12 @@ export default function SuperadminDashboardPage() {
               </nav>
             </div>
 
-            {/* Quick Switcher for Testing other portals */}
+            {/* Portal route references — access remains role-restricted */}
             <div className="p-3.5 rounded-2xl bg-stone-950/80 border border-stone-800/80 space-y-2">
               <div className="flex items-center gap-2 text-[11px] font-bold text-amber-400 uppercase tracking-wider">
-                <Layers className="w-3.5 h-3.5" /> Portal Jumper
+                <Layers className="w-3.5 h-3.5" /> Portal routes
               </div>
-              <p className="text-[11px] text-stone-400">Jump straight into testing other authenticated roles:</p>
+              <p className="text-[11px] text-stone-400">Open a portal route. A matching role-specific account is required to enter:</p>
               <div className="grid grid-cols-1 gap-1 text-[11px]">
                 <Link href="/dashboard/student" className="flex items-center justify-between p-1.5 rounded-lg text-stone-300 hover:bg-stone-900 hover:text-amber-300 transition-colors">
                   <span>Student View</span>
@@ -271,6 +291,10 @@ export default function SuperadminDashboardPage() {
                 </Link>
                 <Link href="/dashboard/recruiter" className="flex items-center justify-between p-1.5 rounded-lg text-stone-300 hover:bg-stone-900 hover:text-amber-300 transition-colors">
                   <span>Recruiter Hub</span>
+                  <ChevronRight className="w-3 h-3 text-stone-500" />
+                </Link>
+                <Link href="/dashboard/mentor" className="flex items-center justify-between p-1.5 rounded-lg text-stone-300 hover:bg-stone-900 hover:text-amber-300 transition-colors">
+                  <span>Industry Mentor</span>
                   <ChevronRight className="w-3 h-3 text-stone-500" />
                 </Link>
               </div>
@@ -324,7 +348,7 @@ export default function SuperadminDashboardPage() {
               >
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#F5A623]" />
-                  <span>3 new recruiter applications pending review today!</span>
+                  <span>Sample notification preview — live alerts are not connected.</span>
                 </div>
                 <button onClick={() => setShowAlertToast(false)} className="text-stone-400 hover:text-white">✕</button>
               </motion.div>
@@ -340,21 +364,20 @@ export default function SuperadminDashboardPage() {
                 <div className="relative z-10 max-w-2xl space-y-3">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/40 backdrop-blur border border-amber-400/30 text-[11px] text-amber-300 font-mono">
                     <Sparkles className="w-3 h-3 text-[#FFD700]" />
-                    MSU-IIT Professional Advancement & Career Enhancement v2.4
+                    PACE · ADMINISTRATOR PREVIEW
                   </div>
                   <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-                    Welcome back, Executive Director.
+                    Welcome to the PACE administration workspace.
                   </h1>
                   <p className="text-sm text-stone-300 leading-relaxed">
-                    Platform synchronization is operating at <span className="text-[#FFD700] font-semibold">99.98% uptime</span>.
-                    Career counseling turnaround average has improved to <span className="text-emerald-400 font-semibold">18.4 hours</span> across all collegiate branches.
+                    The figures in this workspace are sample values for interface review. Live system health and institutional analytics will appear when the corresponding services are connected.
                   </p>
                   <div className="flex flex-wrap gap-3 pt-2">
                     <button onClick={() => setActiveTab("counselors")} className="px-4 py-2 rounded-xl bg-[#F5A623] text-stone-950 font-bold text-xs hover:bg-[#FFD700] transition-colors shadow-lg shadow-amber-500/20">
                       Balance Counselor Load
                     </button>
                     <button onClick={() => setActiveTab("recruiters")} className="px-4 py-2 rounded-xl bg-black/40 hover:bg-black/60 border border-stone-600 text-stone-200 text-xs font-semibold transition-colors">
-                      Review 2 Pending Recruiters
+                      Review recruiter workspace
                     </button>
                   </div>
                 </div>
@@ -634,8 +657,8 @@ export default function SuperadminDashboardPage() {
                         <div className="flex items-start justify-between">
                           <h3 className="font-bold text-white text-sm">{r.company}</h3>
                           <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase ${r.status === "approved" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" :
-                            r.status === "pending" ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" :
-                              "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+                              r.status === "pending" ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" :
+                                "bg-rose-500/20 text-rose-400 border border-rose-500/30"
                             }`}>
                             {r.status}
                           </span>
@@ -885,7 +908,7 @@ export default function SuperadminDashboardPage() {
                       />
                     </div>
                     <button
-                      onClick={() => alert("Global banner updated across all Student and Recruiter views.")}
+                      onClick={() => alert("Preview only: global announcements are not connected to the live platform yet.")}
                       className="px-4 py-2 rounded-xl bg-[#7A0016] text-amber-300 font-bold border border-[#F5A623]/30 hover:bg-[#9B0020] transition-colors"
                     >
                       Broadcast to Portals
@@ -898,5 +921,13 @@ export default function SuperadminDashboardPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function SuperadminDashboardPage() {
+  return (
+    <DashboardAuthGuard allowedRoles={["admin", "superadmin"]} previewNotice="Administrator records, platform metrics, approvals, and settings in this workspace are demonstration data. No live administrative changes are being made.">
+      <SuperadminDashboardContent />
+    </DashboardAuthGuard>
   );
 }

@@ -9,6 +9,7 @@ import {
   Share2, MapPin, DollarSign, Calendar
 } from 'lucide-react';
 import DashboardLayout, { NavItem } from '@/components/DashboardLayout';
+import RecruiterProfilePanel from '@/components/recruiter/RecruiterProfilePanel';
 
 const navItems: NavItem[] = [
   { id: 'jobs', label: 'Job Portal & Feed', icon: <Briefcase size={18} /> },
@@ -162,7 +163,7 @@ export default function RecruiterDashboard() {
 
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
-                  onClick={() => alert("Modal opened: Create and publish a new job opportunity for MSU-IIT students.")}
+                  onClick={() => alert("Preview only: job creation and publishing are not connected to the recruiter service yet.")}
                   className="px-4 py-2 rounded-lg bg-[#7A0016] hover:bg-[#9B0020] text-white text-xs font-bold shadow-xs btn-press flex items-center gap-1.5 whitespace-nowrap"
                 >
                   <Plus size={14} />
@@ -272,13 +273,13 @@ export default function RecruiterDashboard() {
                   {/* Actions */}
                   <div className="flex gap-2 pt-2">
                     <button
-                      onClick={() => alert(`Reviewing candidate pipeline for ${selectedJob.title}`)}
+                      onClick={() => alert(`Preview only: the ${selectedJob.title} candidate pipeline is sample data and is not connected to live applications.`)}
                       className="px-5 py-2 rounded-lg bg-[#7A0016] hover:bg-[#9B0020] text-white text-xs font-bold shadow-xs btn-press"
                     >
                       View Candidate Applications ({selectedJob.applicants})
                     </button>
                     <button
-                      onClick={() => alert(`Job link copied to clipboard!`)}
+                      onClick={() => alert("Preview only: shareable job links are not available until job publishing is connected.")}
                       className="px-3.5 py-2 rounded-lg border border-[#CBD5E1] text-[#334155] hover:bg-slate-50 text-xs font-bold flex items-center gap-1.5"
                     >
                       <Share2 size={14} />
@@ -413,7 +414,7 @@ export default function RecruiterDashboard() {
                     <p className="text-[#64748B]">This CV is available for viewing because the student has completed proper career counseling and received a counselor verification.</p>
                     <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-[10px]"><CheckCircle size={12} /> COUNSELOR-VERIFIED RESUME</span>
                   </div>
-                  <div className="flex gap-2"><button onClick={() => alert(`Opening ${selectedCandidate}'s counselor-verified resume preview.`)} className="flex-1 px-3 py-2 rounded-lg bg-[#7A0016] text-white text-xs font-bold">Preview CV</button><button onClick={() => setSelectedCandidate(null)} className="px-4 py-2 rounded-lg border border-[#CBD5E1] text-[#334155] text-xs font-bold">Close</button></div>
+                  <div className="flex gap-2"><button onClick={() => alert(`Preview only: ${selectedCandidate}'s resume preview is not connected to candidate records yet.`)} className="flex-1 px-3 py-2 rounded-lg bg-[#7A0016] text-white text-xs font-bold">Preview CV</button><button onClick={() => setSelectedCandidate(null)} className="px-4 py-2 rounded-lg border border-[#CBD5E1] text-[#334155] text-xs font-bold">Close</button></div>
                 </div>
               </div>
             )}
@@ -471,27 +472,7 @@ export default function RecruiterDashboard() {
         {/* ─────────────────────────────────────────────────────────────
             TAB 4: COMPANY PROFILE
             ───────────────────────────────────────────────────────────── */}
-        {activeTab === 'company' && (
-          <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-xs p-6 max-w-2xl space-y-4">
-            <h3 className="text-base font-bold text-[#0F172A]">Corporate Partner Profile</h3>
-            <p className="text-xs text-[#64748B]">Showcased on the MSU-IIT student portal directory</p>
-
-            <div className="space-y-3 text-xs">
-              <div>
-                <label className="block font-bold text-[#334155] mb-1">Company Name</label>
-                <input type="text" value="TechCorp Philippines" readOnly className="w-full px-3 py-2 rounded-lg border border-[#CBD5E1] bg-slate-50 text-[#0F172A] font-semibold" />
-              </div>
-              <div>
-                <label className="block font-bold text-[#334155] mb-1">Industry Sector</label>
-                <input type="text" value="Fintech, Distributed Systems & Cloud Infrastructure" readOnly className="w-full px-3 py-2 rounded-lg border border-[#CBD5E1] bg-slate-50 text-[#0F172A]" />
-              </div>
-              <div>
-                <label className="block font-bold text-[#334155] mb-1">Corporate Headquarters / Office</label>
-                <input type="text" value="Cebu IT Park / Iligan Liaison Hub" readOnly className="w-full px-3 py-2 rounded-lg border border-[#CBD5E1] bg-slate-50 text-[#0F172A]" />
-              </div>
-            </div>
-          </div>
-        )}
+        {activeTab === 'company' && <RecruiterProfilePanel />}
 
       </div>
     </DashboardLayout>

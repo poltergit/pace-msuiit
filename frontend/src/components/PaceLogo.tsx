@@ -39,7 +39,7 @@ export default function PaceLogo({
             className={`text-[10px] font-medium tracking-wide mt-1 uppercase ${isDark ? "text-stone-300" : "text-[#64748B]"
               }`}
           >
-            Professional Advancement & Career Enhancement
+            Professional Advancement and Career Empowerment
           </span>
         </div>
       )}

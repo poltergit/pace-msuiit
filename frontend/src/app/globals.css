@@ -2,37 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   AUTHENTIC MY.IIT INSTITUTIONAL PALETTE & VISUAL SYSTEM
-   Mindanao State University – Iligan Institute of Technology
-   Tagline: "All your career advancement in one portal."
-   
-   Color Anatomy:
-   - Primary Header & Hero Anchor: Rich MSU-IIT Maroon (#7A0016 / #5C0011)
-   - Accent Gold: (#F5A623 / #FFD700) for badges, buttons, active highlights
-   - Clean Atmospheric Base: Soft Neutral Slate-Gray (#EEF2F6 / #E2E8F0)
-   - Surface Containers: Pure White (#FFFFFF) with solid slate borders (#D1D5DB)
-   - Deep Readable Typography: Slate Ink (#0F172A / #1E293B / #475569)
-   ───────────────────────────────────────────────────────────────────────────── */
-
 :root {
-  --myiit-maroon: #7A0016;
-  --myiit-maroon-dark: #5C0011;
-  --myiit-maroon-light: #9B0020;
-  --myiit-gold: #F5A623;
-  --myiit-gold-bright: #FFD700;
-  --myiit-bg-canvas: #EEF2F6;
-  --myiit-card: #FFFFFF;
-  --myiit-border: #D1D5DB;
-  --myiit-border-light: #E5E7EB;
-  --myiit-text-title: #0F172A;
+  color-scheme: light;
+  --pace-maroon: #7a0016;
+  --pace-maroon-dark: #5c0011;
+  --pace-maroon-deep: #40000b;
+  --pace-maroon-light: #9b0020;
+  --pace-maroon-soft: #f8ecee;
+  --pace-gold: #f5a623;
+  --pace-gold-bright: #ffd700;
+  --pace-gold-ink: #79500b;
+  --pace-gold-soft: #fff4dc;
+  --pace-canvas: #f4f6f8;
+  --pace-surface: #ffffff;
+  --pace-border: #e2e8f0;
+  --pace-ink: #0f172a;
+  --pace-muted: #64748b;
+
+  --myiit-maroon: var(--pace-maroon);
+  --myiit-maroon-dark: var(--pace-maroon-dark);
+  --myiit-maroon-light: var(--pace-maroon-light);
+  --myiit-gold: var(--pace-gold);
+  --myiit-gold-bright: var(--pace-gold-bright);
+  --myiit-bg-canvas: var(--pace-canvas);
+  --myiit-card: var(--pace-surface);
+  --myiit-border: var(--pace-border);
+  --myiit-border-light: #e5e7eb;
+  --myiit-text-title: var(--pace-ink);
   --myiit-text-body: #334155;
-  --myiit-text-muted: #64748B;
+  --myiit-text-muted: var(--pace-muted);
 }
 
 body {
-  background-color: var(--myiit-bg-canvas);
-  color: var(--myiit-text-body);
+  min-width: 320px;
+  background-color: var(--pace-canvas);
+  color: var(--pace-ink);
   font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   letter-spacing: -0.012em;
   text-rendering: optimizeLegibility;
@@ -41,11 +45,11 @@ body {
 
 /* Shared auth surfaces */
 .gradient-maroon-dark {
-  background: linear-gradient(135deg, #0d0b0e 0%, #3b000b 52%, #5c0011 100%);
+  background: linear-gradient(135deg, var(--pace-maroon-deep) 0%, var(--pace-maroon-dark) 58%, var(--pace-maroon) 100%);
 }
 
 .gradient-maroon {
-  background: linear-gradient(135deg, #9b0020 0%, #7a0016 100%);
+  background: linear-gradient(135deg, var(--pace-maroon-light) 0%, var(--pace-maroon) 100%);
 }
 
 .glass {
@@ -57,7 +61,7 @@ body {
 }
 
 .text-gradient-gold {
-  background: linear-gradient(135deg, #ffd700, #f5a623);
+  background: linear-gradient(135deg, var(--pace-gold-bright), var(--pace-gold));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -141,28 +145,28 @@ body {
 
 /* My.IIT Institutional Header Gradient */
 .myiit-header-gradient {
-  background: linear-gradient(135deg, #7A0016 0%, #5C0011 50%, #40000B 100%);
-  border-bottom: 3px solid #F5A623;
+  background: linear-gradient(135deg, var(--pace-maroon) 0%, var(--pace-maroon-dark) 58%, var(--pace-maroon-deep) 100%);
+  border-bottom: 3px solid var(--pace-gold);
 }
 
 /* My.IIT Portal Card System */
 .myiit-card {
-  background: #FFFFFF;
-  border: 1px solid #D1D5DB;
+  background: var(--pace-surface);
+  border: 1px solid var(--pace-border);
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
   transition: all 0.16s ease-in-out;
 }
 
 .myiit-card:hover {
-  border-color: #9CA3AF;
+  border-color: #cbd5e1;
   box-shadow: 0 4px 12px rgba(122, 0, 22, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
 }
 
 /* My.IIT Role Gate Buttons ("I'm a college student", etc.) */
 .myiit-gate-card {
-  background: #FFFFFF;
-  border: 1px solid #D1D5DB;
+  background: var(--pace-surface);
+  border: 1px solid var(--pace-border);
   border-radius: 10px;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
   transition: all 0.15s ease-in-out;
@@ -170,14 +174,14 @@ body {
 }
 
 .myiit-gate-card:hover {
-  border-color: #7A0016;
-  background: #FFFDF9;
+  border-color: var(--pace-maroon);
+  background: var(--pace-maroon-soft);
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(122, 0, 22, 0.1);
 }
 
 .myiit-gate-card.active {
-  border-color: #7A0016;
+  border-color: var(--pace-maroon);
   border-left-width: 5px;
   background: #FFFFFF;
   box-shadow: 0 2px 6px rgba(122, 0, 22, 0.15);
@@ -185,17 +189,17 @@ body {
 
 /* Primary Button with MSU-IIT Regalia Styling */
 .btn-myiit-primary {
-  background: linear-gradient(to bottom, #7A0016, #630012);
+  background: linear-gradient(to bottom, var(--pace-maroon), var(--pace-maroon-dark));
   color: #FFFFFF;
   font-weight: 700;
-  border: 1px solid #5C0011;
-  box-shadow: 0 1px 2px rgba(92, 0, 17, 0.25);
+  border: 1px solid var(--pace-maroon-dark);
+  box-shadow: 0 1px 2px rgba(92, 0, 17, 0.2);
   transition: all 0.15s ease;
 }
 
 .btn-myiit-primary:hover {
-  background: linear-gradient(to bottom, #9B0020, #7A0016);
-  border-color: #40000B;
+  background: linear-gradient(to bottom, var(--pace-maroon-light), var(--pace-maroon));
+  border-color: var(--pace-maroon-deep);
 }
 
 .btn-myiit-primary:active {
@@ -204,16 +208,16 @@ body {
 
 /* Secondary Gold Button */
 .btn-myiit-gold {
-  background: linear-gradient(to bottom, #F5A623, #DF9215);
-  color: #0F172A;
+  background: linear-gradient(to bottom, var(--pace-gold), #e99a18);
+  color: var(--pace-ink);
   font-weight: 700;
-  border: 1px solid #C8851C;
-  box-shadow: 0 1px 2px rgba(200, 133, 28, 0.25);
+  border: 1px solid #c8851c;
+  box-shadow: 0 1px 2px rgba(200, 133, 28, 0.2);
   transition: all 0.15s ease;
 }
 
 .btn-myiit-gold:hover {
-  background: linear-gradient(to bottom, #FFB833, #F5A623);
+  background: linear-gradient(to bottom, #ffb833, var(--pace-gold));
 }
 
 /* Dense Data Table Header */
@@ -224,7 +228,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 2px solid #E2E8F0;
+  border-bottom: 2px solid var(--pace-border);
 }
 
 /* Monospace numerics */
@@ -240,7 +244,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #E2E8F0;
+  background: #e2e8f0;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -249,33 +253,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7A0016;
+  background: var(--pace-maroon);
 }
 
-
-/* PACE experience foundations — shared across public, auth, and portal routes. */
-:root {
-  color-scheme: light;
-  --pace-maroon: #7a0016;
-  --pace-maroon-deep: #4c0010;
-  --pace-gold: #f5a623;
-  --pace-canvas: #f7f6f3;
-  --pace-ink: #0f172a;
-  --pace-muted: #64748b;
-  --pace-border: #e2e8f0;
-}
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
-}
-
-body {
-  min-width: 320px;
-  background: var(--pace-canvas);
-  color: var(--pace-ink);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {

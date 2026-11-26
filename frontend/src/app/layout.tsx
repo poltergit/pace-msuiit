@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "P.A.C.E. | Professional Advancement & Career Enhancement — MSU-IIT",
+  title: "P.A.C.E. Career Center | MSU-IIT",
   description:
-    "The MSU-IIT career development platform connecting IITian talent, career guidance, and industry opportunities through Professional Advancement & Career Enhancement.",
+    "Professional Advancement and Career Empowerment (P.A.C.E.) is the MSU-IIT platform connecting students, counselors, alumni, and authorized partner recruiters through guidance, preparation, and opportunity.",
 };
 
 export default function RootLayout({

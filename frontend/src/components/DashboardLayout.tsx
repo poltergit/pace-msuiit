@@ -110,7 +110,7 @@ export default function DashboardLayout({
 
   if (authLoading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#F7F6F3] px-6">
+      <main className="flex min-h-screen items-center justify-center bg-[#F4F6F8] px-6">
         <div className="text-center">
           <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#7A0016] text-white"><LoaderCircle size={22} className="animate-spin" /></span>
           <p className="mt-4 text-sm font-semibold text-slate-800">Verifying your PACE session</p>
@@ -122,7 +122,7 @@ export default function DashboardLayout({
 
   if (authError || !authUser) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#F7F6F3] px-6">
+      <main className="flex min-h-screen items-center justify-center bg-[#F4F6F8] px-6">
         <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-xl shadow-slate-900/[0.04]">
           <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 text-amber-700"><AlertCircle size={22} /></span>
           <h1 className="mt-5 text-xl font-semibold">Session verification unavailable</h1>
@@ -135,7 +135,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F7F6F3] font-sans text-[#0F172A]">
+    <div className="flex min-h-screen flex-col bg-[#F4F6F8] font-sans text-[#0F172A]">
       <header className="myiit-header-gradient flex items-center justify-between px-4 py-2.5 text-white shadow-sm sm:px-6">
         <div className="flex items-center gap-3">
           <button onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={mobileOpen} className="rounded p-1 text-stone-200 hover:text-white focus-visible:outline-white md:hidden">
@@ -175,8 +175,8 @@ export default function DashboardLayout({
               {navItems.map((item) => {
                 const isActive = activeTab === item.id;
                 return (
-                  <button key={item.id} onClick={() => { onTabChange(item.id); setMobileOpen(false); }} aria-current={isActive ? 'page' : undefined} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-bold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A0016] ${isActive ? 'bg-[#7A0016] text-white shadow-sm' : 'text-[#475569] hover:bg-slate-100 hover:text-[#0F172A]'} ${collapsed ? 'justify-center' : ''}`} title={collapsed ? item.label : undefined}>
-                    <span className={isActive ? 'text-[#FFD700]' : 'text-[#64748B]'}>{item.icon}</span>
+                  <button key={item.id} onClick={() => { onTabChange(item.id); setMobileOpen(false); }} aria-current={isActive ? 'page' : undefined} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A0016] ${isActive ? 'bg-[#F8ECEE] text-[#5C0011] ring-1 ring-inset ring-[#E9D7DA]' : 'text-[#475569] hover:bg-slate-100 hover:text-[#0F172A]'} ${collapsed ? 'justify-center' : ''}`} title={collapsed ? item.label : undefined}>
+                    <span className={isActive ? 'text-[#7A0016]' : 'text-[#64748B]'}>{item.icon}</span>
                     {!collapsed && <span>{item.label}</span>}
                   </button>
                 );
@@ -192,8 +192,8 @@ export default function DashboardLayout({
 
         <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           <div className="mx-auto max-w-7xl">
-            <div className="mb-5 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-5 text-amber-900">
-              <AlertCircle size={16} className="mt-0.5 shrink-0" />
+            <div className="mb-5 flex items-start gap-3 rounded-lg border border-[#EAD5A5] bg-[#FFF9ED] px-4 py-3 text-xs leading-5 text-[#664900]">
+              <AlertCircle size={16} className="mt-0.5 shrink-0 text-[#8A5A00]" />
               <p><strong>Workspace preview.</strong> Some dashboard records and activities are demonstration data until their corresponding backend services are connected. Do not treat sample metrics or actions as live institutional records.</p>
             </div>
             {children}
@@ -201,9 +201,6 @@ export default function DashboardLayout({
         </main>
       </div>
 
-      <div className="pointer-events-none fixed bottom-5 right-5 z-30 hidden sm:block">
-        <div className="rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-[10px] font-medium text-slate-500 shadow-sm backdrop-blur"><span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />Signed in as {authUser.role}</div>
-      </div>
     </div>
   );
 }

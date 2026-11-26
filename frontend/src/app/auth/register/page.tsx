@@ -139,7 +139,7 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#F7F6F3] px-5 py-12">
+      <main className="flex min-h-screen items-center justify-center bg-[#F4F6F8] px-5 py-12">
         <section className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-xl shadow-slate-900/[0.04] sm:p-10">
           <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-700"><CheckCircle2 size={27} /></span>
           <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#9A6A20]">Registration submitted</p>
@@ -153,8 +153,8 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F7F6F3] text-slate-900">
-      <header className="bg-[#4C0010] px-5 py-4 text-white sm:px-8">
+    <main className="min-h-screen bg-[#F4F6F8] text-slate-900">
+      <header className="bg-[#5C0011] px-5 py-4 text-white sm:px-8">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <Link href="/" className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-lg bg-white p-1"><PaceLogo size={32} showText={false} /></span><span><span className="block text-sm font-bold tracking-[0.16em]">P.A.C.E.</span><span className="text-[9px] tracking-[0.14em] text-white/60">MSU–IIT</span></span></Link>
           <Link href="/auth/login" className="text-xs font-semibold text-white/80 transition hover:text-amber-300">Already registered? Sign in <ArrowRight size={13} className="ml-1 inline" /></Link>

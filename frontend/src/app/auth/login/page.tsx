@@ -65,9 +65,9 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F7F6F3] text-slate-900">
+    <main className="min-h-screen bg-[#F4F6F8] text-slate-900">
       <div className="grid min-h-screen lg:grid-cols-[minmax(0,1.05fr)_minmax(460px,0.95fr)]">
-        <section className="relative hidden overflow-hidden bg-[#4C0010] px-12 py-10 text-white lg:flex lg:flex-col xl:px-20">
+        <section className="relative hidden overflow-hidden bg-[#5C0011] px-12 py-10 text-white lg:flex lg:flex-col xl:px-20">
           <div className="absolute inset-0 opacity-20" aria-hidden="true">
             <div className="absolute -right-40 -top-32 h-[34rem] w-[34rem] rounded-full border border-amber-200/40" />
             <div className="absolute -right-16 top-8 h-[25rem] w-[25rem] rounded-full border border-amber-200/30" />
@@ -88,7 +88,7 @@ export default function LoginPage() {
           <div className="relative z-10 my-auto max-w-xl py-20">
             <p className="mb-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-amber-300">
               <span className="h-px w-8 bg-amber-300" />
-              Professional Advancement & Career Enhancement
+              Professional Advancement and Career Empowerment
             </p>
             <h1 className="text-5xl font-semibold leading-[1.08] tracking-tight xl:text-6xl">
               Your next chapter starts <span className="font-serif italic text-amber-300">here.</span>

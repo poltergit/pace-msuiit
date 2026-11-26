@@ -1,0 +1,55 @@
+NO NEED FOR YOU TO APPLY OR IMPLEMENT THIS. I JUST WANT YOU TO KNOW THAT THESE FOLLOWING MODULE EXISTS, ANND YOU SHOULD TAKE NOTE  OF THAT ALONGTHEWAY MAKING THE SYSTEM.
+Use this as basis for continuation:
+
+1. Required ERD changes
+Remove
+ A. Remove GPA from STUDENT_PROFILES
+
+Your STUDENT_PROFILES table currently contains a gpa field.
+
+Since PACE will not access or integrate official academic records, remove this field entirely.
+
+Keep:
+- Student number
+- First and last name
+- Course
+- Year level
+- Phone
+- Address
+- Biography
+- Location
+- Career status
+This allows PACE to maintain career-related student profiles without becoming an academic records management system.
+
+Add
+ C. Add a COUNSELOR_ENDORSEMENTS table
+
+This is the most important missing structure I noticed.
+
+We previously established that counselors can endorse students when:
+- A recruiter requests recommendations.
+- The counselor has interviewed or conducted a career talk with the student.
+- The counselor believes the student is suitable for recommendation.
+- The student must explicitly approve or reject the proposed endorsement.
+Your current ERD does not clearly represent this complete approval workflow.
+
+    Field	Type	Purpose
+id	UUID	Primary key
+student_id	UUID	Student being endorsed
+counselor_id	UUID	Endorsing counselor
+recruiter_id	UUID	Recruiter requesting or receiving the endorsement
+company_id	UUID	Associated company
+job_id	UUID, nullable	Related job opportunity, if applicable
+endorsement_message	TEXT	Counselor's recommendation
+status	TEXT	Approval workflow status
+student_response	TEXT, nullable	Student's response
+proposed_at	TIMESTAMP	Date endorsement was proposed
+responded_at	TIMESTAMP, nullable	Date student responded
+created_at	TIMESTAMP	Record creation
+updated_at	TIMESTAMP	Last update
+
+Suggested endorsement statuses:
+- pending_student_approval
+- approved
+- rejected
+- withdrawn
